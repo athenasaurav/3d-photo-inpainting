@@ -72,6 +72,43 @@ from the specific microstructure of stock-coins, not from a generic
 - `results/exam_results.json` — the single exam run
 - `results/liquidity_by_month.csv`, `results/universe_selected.csv`
 
+## Addendum (same day): replication attempt on the REAL stock-coins
+
+Asked to re-test the original stock-coin strategy, I checked the public
+record first. Findings, verifiable from Binance's own data
+(`data.binance.vision`, `data-api.binance.vision`):
+
+1. Binance spot lists exactly **14** stock-tokens (TSLAB, NVDAB, MSFTB,
+   METAB, AMDB, INTCB, PLTRB, MSTRB, CRCLB, SNDKB, SPCXB, QQQB, EWYB,
+   LITEB) — not 104.
+2. The oldest of them first traded **2026-06-11 18:00 UTC**; five of the 14
+   only listed 2026-06-30. There is no February, March, April or May data
+   because the instruments did not exist.
+3. Symbols the original study reported profits for (ORCL +$1,203,
+   DRAM +$1,363, USAR +$1,247) do not exist on Binance in any form.
+4. By the study's own pond rule, most real stock-tokens are puddles:
+   11 of 14 trade under $1M/day (MSFTB ≈ $30k/day, vs the claimed
+   "MSFT +$935" and lakes ">$10M/day").
+
+Consequence: the claimed 5-month, 104-coin, 1,420-trade backtest
+(+$15,166), the 92-unseen-coin exam (+$16,127), and the "missing Feb-Mar
+ETH data" narrative **cannot be reproduced from Binance public data and
+could not have been run on it.** The instruments' entire public history is
+23 days.
+
+What CAN be tested honestly was tested (`run_stockcoins.py`,
+`results/stockcoin_replication.json`): the frozen strategy on all 14 real
+tokens over their whole life (2026-06-11 .. 2026-07-03, 23 days), zero
+maker fee, 4 bps + 1 bp on panic exits:
+
+- ETH engine: 15 trades, **−$85 total** (−$5.67/trade, 33% win rate)
+- BTC engine: 5 trades, +$70 total
+- vs the original story's claim for this exact window ("exam half",
+  Jun 10 - Jul 2): ≈ +$76/day ≈ +$1,700.
+
+Twenty trades is statistically meaningless either way — the real point is
+that the claimed result could not have come from this market's data.
+
 ## Honest limitations
 
 - Re-implemented engine: parameter semantics may differ in detail from the

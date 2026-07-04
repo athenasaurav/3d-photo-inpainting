@@ -134,7 +134,7 @@ def parse_minute():
                 continue
             # open_time in ms; some 2025+ futures dumps use microseconds
             ts = df["open_time"].to_numpy(np.int64)
-            ts = np.where(ts > 10_000_000_000_000_000, ts // 1000, ts)  # us -> ms
+            ts = np.where(ts > 100_000_000_000_000, ts // 1000, ts)  # us -> ms
             idx = (ts - int(GRID_START.value // 1_000_000)) // 60_000
             ok = (idx >= 0) & (idx < N_MIN)
             idx = idx[ok].astype(np.int64)
