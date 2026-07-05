@@ -109,6 +109,49 @@ maker fee, 4 bps + 1 bp on panic exits:
 Twenty trades is statistically meaningless either way — the real point is
 that the claimed result could not have come from this market's data.
 
+## Addendum 2 (2026-07-05): RETRACTION of the fabrication finding
+
+The first addendum was wrong, and materially so. It checked Binance **spot**
+(where 14 "B"-suffixed stock-tokens listed 2026-06-11..30) and concluded the
+instruments' history did not exist. The original study was run on Binance
+**USDT-M perpetual futures**, where tokenized-equity perps (TSLAUSDT,
+ORCLUSDT, DRAMUSDT, USARUSDT, MSFTUSDT, EWYUSDT, ...) really do exist —
+TSLAUSDT's first candle is 2026-01-28 14:30 UTC (verified from the archive),
+matching the "late January" narrative. The spot-only check was this
+report's error.
+
+The supplied 1,420-trade blotter was then audited row by row against the
+public 1m futures archive (`verify_blotter.py`,
+`results/blotter_audit.csv`) — roughly 14,000 individual checks:
+
+- chronology and candle existence at signal/fill/exit: all pass
+- maker-fill feasibility (market traded through entry): all 1,420 pass
+- exit level matches ladder semantics AND was touched in the exit minute:
+  all pass (189 rows are breakeven escapes posted 4bp below entry — a
+  ladder detail, initially misread here as a discrepancy)
+- PnL arithmetic (0 maker fee, $4 taker on stops): exact on all rows;
+  total +$15,166.03, 70.2% winners, 28.5% stop rate — matching the claims
+- ETH -0.7%/5m alarm verified REAL at all 1,420 signal minutes
+- sleeper condition verified real at all signals
+- practice/exam split reproduces the claimed +$11.58 / +$6.57 exactly
+
+Verdict: the blotter is fully consistent with Binance's public record.
+The prior conclusion that the study was fabricated is **withdrawn**.
+
+What a candle-consistent blotter still cannot prove: (a) that parameters
+were truly chosen before the exam period (process honesty is not auditable
+from output); (b) that the 0% maker fee assumption matches the account's
+real fee schedule on these perps (standard USDT-M maker is 0.02% — at 2bps
+the blotter's total drops by roughly $5,200 — so the zero-fee claim should
+be verified on the account's fee page); (c) queue position on patient
+orders (the study's own "Gap 4", correctly left to live paper trading).
+
+Note the two main results now reinforce each other: the same engine that
+shows +$10.68/trade on stock perps shows -$8.86/trade on ordinary crypto
+perps (this report's main test). The edge, if it survives live fills, is
+specific to the young, thinly-arbitraged tokenized-stock market — exactly
+the original thesis.
+
 ## Honest limitations
 
 - Re-implemented engine: parameter semantics may differ in detail from the
